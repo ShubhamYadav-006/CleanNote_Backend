@@ -1,28 +1,31 @@
 import express from "express";
+import cors from "cors";
 import noteRoutes from "./routes/noteRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
-
 const app = express();
 
-// Custom CORS middleware to allow requests from the frontend
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+// CORS Configuration
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://clean-note-frontend.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
-app.use(express.json())
+// Middleware
+app.use(express.json());
+
+// Test Route
 app.get("/", (req, res) => {
-  res.send("Welcome To Notes Application Programming interface");
+  res.send("Welcome To Notes Application Programming Interface");
 });
 
+// Routes
 app.use("/auth", authRoutes);
 app.use("/notes", noteRoutes);
+
 export default app;
