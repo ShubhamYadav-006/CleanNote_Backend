@@ -3,6 +3,7 @@ import cors from "cors";
 import noteRoutes from "./routes/noteRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
+
 const app = express();
 
 // CORS Configuration
@@ -19,10 +20,6 @@ app.use(
 // Middleware
 app.use(express.json());
 
-// Test Route
-app.get("/", (req, res) => {
-  res.send("Welcome To Notes Application Programming Interface");
-});
 
 // Routes
 app.use("/auth", authRoutes);
